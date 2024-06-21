@@ -1,43 +1,30 @@
-"use client";
 import { configureStore } from "@reduxjs/toolkit";
-import {
-  FLUSH,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-  REHYDRATE,
-  persistReducer,
-  persistStore,
-} from "redux-persist";
-// import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
-import baseApi from "./baseApi/baseApi";
-import authReducer from "./features/auth/authSlice";
-import paginationReducer from "./features/pagination/PaginationSlice";
-import storage from "./storage";
+import { apiSlice } from "./features/apiSlice/apiSlice";
+import authSlice from "./features/auth/authSlice";
+import cartSlice from "./features/cart/cartSlice";
+import userCourseSlice from "./features/usreCourses/userCourseSlice";
 
-const persistConfig = {
-  key: "auth",
-  storage,
-};
-const persistedAuthReducer = persistReducer(persistConfig, authReducer);
-
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-    [baseApi.reducerPath]: baseApi.reducer,
-    auth: persistedAuthReducer,
-    pagination: paginationReducer
+    [apiSlice.reducerPath]: apiSlice.reducer,
+    auth: authSlice,
+    cart: cartSlice,
+    userCourse: userCourseSlice,
   },
-  middleware: (getDefaultMiddlewares) =>
-    getDefaultMiddlewares({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }).concat(baseApi.middleware,),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(apiSlice.middleware),
 });
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+// initialize app
 
-export default store;
-persistStore(store);
+// const initiallize = () => {
+//   store.dispatch(
+//     apiSlice.endpoints.refreshToken.initiate({}, { forceRefetch: true })
+//   );
+
+//   store.dispatch(
+//     apiSlice.endpoints.userInfo.initiate({}, { forceRefetch: true })
+//   );
+// };
+
+// initiallize();

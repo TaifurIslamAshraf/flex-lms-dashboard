@@ -1,26 +1,41 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { TInitialState } from "./interface";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: TInitialState = {
-  user: null,
-  token: null,
+const initialState = {
+  token: "",
+  user: {},
 };
 
 const authSlice = createSlice({
-  name: "placeOrderSlice",
+  name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action) => {
-      const { user, token } = action.payload;
-      state.user = user;
-      state.token = token;
+    userRegistretion: (state, action: PayloadAction<{ token: string }>) => {
+      state.token = action.payload.token;
     },
-    logOut: (state) => {
-      state.user = null;
-      state.token = null;
+
+    userLogin: (
+      state,
+      action: PayloadAction<{ accessToken: string; user: any }>
+    ) => {
+      state.token = action.payload.accessToken;
+      state.user = action.payload.user;
+    },
+
+    userLogout: (state, action) => {
+      state.token = "";
+      state.user = "";
+    },
+
+    loadUser: (state, action) => {
+      state.user = action.payload;
+    },
+
+    updateUser: (state, action: PayloadAction<{ user: object }>) => {
+      state.user = action.payload.user;
     },
   },
 });
-export const { setUser, logOut } = authSlice.actions;
 
+export const { userLogin, userLogout, userRegistretion, updateUser, loadUser } =
+  authSlice.actions;
 export default authSlice.reducer;

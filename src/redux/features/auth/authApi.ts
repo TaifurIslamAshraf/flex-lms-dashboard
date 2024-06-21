@@ -1,15 +1,97 @@
-import baseApi from "@/redux/baseApi/baseApi";
+import { apiSlice } from "../apiSlice/apiSlice";
+import { loadUser, userLogout } from "./authSlice";
 
-const authApi = baseApi.injectEndpoints({
-  endpoints: (builder) => ({
-    login: builder.mutation({
-      query: (userInfo) => ({
-        url: "/auth/login",
+export const authApi = apiSlice.injectEndpoints({
+  endpoints: (build) => ({
+    register: build.mutation({
+      query: (data) => ({
+        url: "/auth/register",
         method: "POST",
-        body: userInfo,
+        body: data,
+        credentials: "include" as const,
       }),
+    }),
+
+    logout: build.query({
+      query: () => ({
+        url: "/auth/logout",
+        method: "GET",
+        credentials: "include",
+      }),
+
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          dispatch(userLogout({}));
+        } catch (error: any) {
+          console.log(error.message);
+        }
+      },
+    }),
+
+    resetPassword: build.mutation({
+      query: (data) => ({
+        url: "/auth/reset-password",
+        method: "PUT",
+        body: data,
+        credentials: "include",
+      }),
+    }),
+
+    forgotPassword: build.mutation({
+      query: ({ email }) => ({
+        url: "/auth/forgot-password",
+        method: "POST",
+        body: { email: email },
+
+        credentials: "include",
+      }),
+    }),
+    getAllUsers: build.query({
+      query: ({}) => ({
+        url: "/user/all-users",
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["Users"] as any,
+    }),
+
+    updateUserRole: build.mutation({
+      query: ({ data }) => ({
+        url: "/user/update-role",
+        method: "PUT",
+        body: data,
+
+        credentials: "include",
+      }),
+      invalidatesTags: ["Users"] as any,
+    }),
+
+    getMe: build.query({
+      query: ({ accessToken }) => ({
+        url: "/users/me",
+        method: "GET",
+        credentials: "include",
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      }),
+      invalidatesTags: ["Users"] as any,
+
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        const result = await queryFulfilled;
+        dispatch(loadUser(result?.data?.data));
+      },
     }),
   }),
 });
 
-export const { useLoginMutation } = authApi;
+export const {
+  useRegisterMutation,
+  useLogoutQuery,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+  useGetAllUsersQuery,
+  useUpdateUserRoleMutation,
+  useGetMeQuery,
+} = authApi;

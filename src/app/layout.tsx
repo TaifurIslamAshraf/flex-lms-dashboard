@@ -1,18 +1,21 @@
-import { ThemeProvider } from "@/components/provider/theme-provider";
-import { Toaster } from "@/components/ui/toaster";
+import ReduxProvider from "@/redux/reduxProvider";
+import AuthProvider from "@/utilities/SessionProvider";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import StoreProvider from "../redux/StoreProvider";
+import { Poppins } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+});
 
 export const metadata: Metadata = {
   title: {
-    default: "Oneself",
-    template: "%s | Oneself",
+    default: "Flex-LMS-Dashboard",
+    template: "%s | Flex-LMS-Dashboard",
   },
-  description: "Oneself",
+  description: "Flex-LMS-Dashboard",
 };
 
 export default function RootLayout({
@@ -21,22 +24,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <StoreProvider>
-      <html lang="en">
-        <body className={inter.className}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+    <ReduxProvider>
+      <AuthProvider>
+        <html lang="en">
+          <body className={poppins.className}>
             <main className="max-w-screen-2xl mx-auto">
               {children}
-              <Toaster />
+              <Toaster position="top-center" reverseOrder={false} />
             </main>
-          </ThemeProvider>
-        </body>
-      </html>
-    </StoreProvider>
+          </body>
+        </html>
+      </AuthProvider>
+    </ReduxProvider>
   );
 }

@@ -1,6 +1,8 @@
-import { serverApi } from "@/lib/utils";
+import config from "@/config/config";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { userLogin } from "../auth/authSlice";
+
+const serverApi = config.serverApi;
 
 export const apiSlice = createApi({
   reducerPath: "api",

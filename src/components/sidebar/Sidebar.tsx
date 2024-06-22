@@ -1,57 +1,54 @@
-"use client";
-import { usePathname } from "next/navigation";
+import { styles } from "@/app/styles";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, PlusCircle } from "lucide-react";
+import { assests } from "@/utilities/assests";
+import { Menu } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-// import { useAppSelector } from "@/redux/hooks";
+import ProfilePicture from "../profile/ProfilePicture";
+import SidebarList from "./SidebarList";
 
-export function Sidebar() {
-  const pathname = usePathname();
-  // const role = useAppSelector(({ auth }) => auth.user);
-  // console.log(role)
-  console.log("first")
-  console.log("first")
+const Sidebar = () => {
   return (
-    <div className="w-[16rem] p-2 h-[calc(100vh-60px)] border-r overflow-y-auto">
-      <Link href="/dashboard">
-        <span
-          className={cn(
-            "group flex gap-2 items-center  px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
-            pathname === "/dashboard"
-              ? "bg-primary text-white hover:bg-primary hover:text-white"
-              : "transparent"
-          )}
-        >
-          <LayoutDashboard className="w-4 h-4" />
-          <span>Dashboard</span>
-        </span>
-      </Link>
-      <Link href="/dashboard/courses">
-        <span
-          className={cn(
-            "group flex gap-2 items-center  px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
-            pathname === "/dashboard/courses"
-              ? "bg-primary text-white hover:bg-primary hover:text-white"
-              : "transparent"
-          )}
-        >
-          <PlusCircle className="w-4 h-4" />
-          <span>Courses</span>
-        </span>
-      </Link>
-      <Link href="/dashboard/students">
-        <span
-          className={cn(
-            "group flex gap-2 items-center  px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
-            pathname === "/dashboard/students"
-              ? "bg-primary text-white hover:bg-primary hover:text-white"
-              : "transparent"
-          )}
-        >
-          <PlusCircle className="w-4 h-4" />
-          <span>Students</span>
-        </span>
-      </Link>
+    <div>
+      <div className="lg:block hidden">
+        <SidebarList
+          parantClass={`bg-secondary
+      h-screen transition-all duration-400 group text-[#1B4242] px-3 overflow-y-auto scrollbar-hide z-40 border-r-2 border-r-blue-400/75 w-72 fixed left-0`}
+        />
+      </div>
+      <div
+        className={cn(
+          styles.paddingX,
+          "lg:hidden flex items-center justify-between bg-secondary shadow-md z-40 w-full fixed top-0 h-[80px]"
+        )}
+      >
+        <Sheet>
+          <SheetTrigger className="cursor-pointer" asChild>
+            <Menu />
+          </SheetTrigger>
+          <SheetContent
+            className="bg-secondary max-w-[300px] overflow-y-auto scrollbar-thin"
+            side={"left"}
+          >
+            <SidebarList parantClass="text-[#1B4242] mt-5" header={false} />
+          </SheetContent>
+        </Sheet>
+
+        <Link href={"/"}>
+          <Image
+            className="md:w-[150px] w-[120px]"
+            src={assests.Logo}
+            width={150}
+            height={150}
+            alt="logo"
+          />
+        </Link>
+
+        <ProfilePicture />
+      </div>
     </div>
   );
-}
+};
+
+export default Sidebar;

@@ -170,3 +170,10 @@ export interface IUserSingleCourse {
     __v: number;
   };
 }
+
+export interface IBestSellingCourse {
+  _id: string;
+  thumbnail: string;
+  name: string;
+  totalPurchased: number;
+}

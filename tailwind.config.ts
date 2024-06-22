@@ -1,13 +1,14 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
+import { AddUtilities } from "./src/types/tailwind.d";
 
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -74,7 +75,39 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config
+  plugins: [
+    require("tailwindcss-animate"),
+    function ({ addUtilities }: { addUtilities: AddUtilities }) {
+      const newUtilities = {
+        ".scrollbar-hide": {
+          /* Firefox */
+          "scrollbar-width": "none",
+          /* Safari and Chrome */
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+        },
+        ".scrollbar-thin": {
+          /* Firefox */
+          "scrollbar-width": "thin",
+          /* Safari and Chrome */
+          "&::-webkit-scrollbar": {
+            width: "4px",
+            height: "4px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            background: "#a0aec0",
+            borderRadius: "6px",
+          },
+          "&::-webkit-scrollbar-track": {
+            background: "#edf2f7",
+          },
+        },
+      };
 
-export default config
+      addUtilities(newUtilities, ["responsive", "hover"]);
+    },
+  ],
+} satisfies Config;
+
+export default config;

@@ -1,20 +1,22 @@
-// "use client";
-// import { useAppSelector } from "@/redux/hooks";
-// import { redirect } from "next/navigation";
-export default function Home() {
-  // const user = useAppSelector((state) => state.auth.user);
-  // const dashboardPath = false;
-  // if (user?.role === "admin") {
-  // if (!dashboardPath) {
-  //   redirect("/dashboard");
-  // }
-  // } else {
-  //   redirect("/login");
-  // }
+import BestSelling from "@/components/BestSelling/BestSelling";
+import InfoCard from "@/components/InfoCard";
+import { cn } from "@/lib/utils";
+import { styles } from "../styles";
 
+export default function Home() {
   return (
-    <div className="flex justify-center items-center h-[100vh]">
-      <h1>Dashboard Home page</h1>
+    <div className={cn(styles.paddingY, styles.paddingX, styles.layoutML)}>
+      <div className="space-y-6">
+        <h1 className="font-extrabold text-muted-foreground text-2xl">
+          Overview
+        </h1>
+        <div className="flex items-center gap-6">
+          <InfoCard title="Total Courses" info="4" />
+          <InfoCard title="Most Purchased" info="6" />
+        </div>
+      </div>
+
+      <BestSelling />
     </div>
   );
 }

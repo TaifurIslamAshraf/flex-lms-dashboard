@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 const userLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="flex">
+    <div className="">
       <Sidebar />
       {children}
     </div>

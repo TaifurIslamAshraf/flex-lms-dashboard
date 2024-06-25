@@ -8,8 +8,10 @@ import CourseInfo from "@/components/courses/CourseInfo";
 import CoursePreview from "@/components/courses/CoursePreview";
 import FormStep1 from "@/components/courses/FormStep1";
 import FormStep2 from "@/components/courses/FormStep2";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
+import { courseFormSchema } from "@/lib/formShemas/createCourse.schema";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -24,45 +26,6 @@ interface INext {
   validation?: () => boolean;
 }
 
-const courseFormSchema = z.object({
-  name: z.string().min(1, "Course name is required"),
-  description: z.string().min(1, "Description is required"),
-  price: z.string().min(1, "Price must be a positive number"),
-  estimatedPrice: z.string(),
-  tags: z.string().min(1, "Tags are required"),
-  level: z.string().min(1, "Level is required"),
-  demoUrl: z.string().url("Invalid URL for demo"),
-  thumbnail: z.string().min(1, "Thumbnail is Required"),
-  benefits: z
-    .array(
-      z.object({
-        title: z.string().min(1, "Benefit is required"),
-      })
-    )
-    .nonempty("Benefits is required"),
-  prerequisites: z
-    .array(
-      z.object({
-        title: z.string().min(1, "Prerequisites is required"),
-      })
-    )
-    .nonempty("Prerequisites is required"),
-  courseData: z.array(
-    z.object({
-      videoTitle: z.string().min(1, "Video title is required"),
-      videoDescription: z.string().min(1, "Video description is required"),
-      videoUrl: z.string().url("Invalid URL for video"),
-      videoSection: z.string().min(1, "Video section is required"),
-      links: z.array(
-        z.object({
-          title: z.string().min(1, "Link title is required"),
-          url: z.string().url("Invalid URL for link"),
-        })
-      ),
-    })
-  ),
-});
-
 const CreateCourse = () => {
   const CourseForm = useForm<z.infer<typeof courseFormSchema>>({
     resolver: zodResolver(courseFormSchema),
@@ -74,6 +37,10 @@ const CreateCourse = () => {
       estimatedPrice: "",
       tags: "",
       level: "",
+      courseDuration: "",
+      category: "",
+      subcategory: "",
+      details: [{ title: "" }],
       demoUrl: "",
       thumbnail: "",
       benefits: [{ title: "" }],
@@ -83,6 +50,8 @@ const CreateCourse = () => {
           videoTitle: "",
           videoDescription: "",
           videoUrl: "",
+          videoPlayer: "",
+          videoLength: "",
           videoSection: "Untitled Section",
           links: [
             {
@@ -94,10 +63,17 @@ const CreateCourse = () => {
       ],
     },
   });
-  const [formStep, setFormStep] = useState(0);
+  const [formStep, setFormStep] = useState(2);
+  const [isCollapsed, setIsCollapsed] = useState<boolean[]>([]);
 
   const handleCreateCourse = (data: z.infer<typeof courseFormSchema>) => {
     console.log(data);
+  };
+
+  const handleCollapseToggle = (index: number) => {
+    const updatedCollapsed = [...isCollapsed];
+    updatedCollapsed[index] = !updatedCollapsed[index];
+    setIsCollapsed(updatedCollapsed);
   };
 
   const handlePrevClick = () => {
@@ -112,13 +88,11 @@ const CreateCourse = () => {
     }
   };
 
-  console.log(CourseForm.watch());
-
   return (
     <div className={cn(styles.paddingY, styles.paddingX, styles.layoutML)}>
       <CourseFormSteps formStep={formStep} setFormStep={setFormStep} />
-      <Card className="w-[900px] py-5 mx-auto">
-        <CardContent>
+      <Card className="max-w-[900px] w-full py-5 bg-secondary">
+        <CardContent className="">
           <Form {...CourseForm}>
             <form onSubmit={CourseForm.handleSubmit(handleCreateCourse)}>
               {formStep === 0 && (
@@ -140,6 +114,8 @@ const CreateCourse = () => {
                   handleNextClick={handleNextClick}
                   handlePrevClick={handlePrevClick}
                   form={CourseForm}
+                  isCollapsed={isCollapsed}
+                  onCollapseToggle={handleCollapseToggle}
                 />
               )}
               {formStep === 3 && (
@@ -149,7 +125,7 @@ const CreateCourse = () => {
                   form={CourseForm}
                 />
               )}
-              {/* <Button type="submit">Submit</Button> */}
+              <Button type="submit">Submit</Button>
             </form>
           </Form>
         </CardContent>

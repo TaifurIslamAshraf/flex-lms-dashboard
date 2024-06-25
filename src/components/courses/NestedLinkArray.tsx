@@ -25,7 +25,7 @@ const NestedLinkArray = ({ nestedIndex, form }: INestedProps) => {
 
   const handleLinkDelete = (linkId: string) => {
     const linkIndex = fields.findIndex((link) => link.id === linkId);
-    console.log(linkIndex);
+
     if (linkIndex !== -1) {
       remove(linkIndex);
     }
@@ -42,59 +42,62 @@ const NestedLinkArray = ({ nestedIndex, form }: INestedProps) => {
   };
 
   return (
-    <div className="">
+    <div className="space-y-6">
       {fields.map((link, linkIndex) => (
-        <div key={link.id}>
-          <div key={linkIndex} className="space-y-4">
-            <FormField
-              control={form.control}
-              name={`courseData.${nestedIndex}.links.${linkIndex}.title`}
-              render={({ field }) => (
-                <FormItem>
-                  <div className="flex items-center justify-between">
-                    <FormLabel className="text-primary">
-                      Link {linkIndex + 1}
-                    </FormLabel>
-                    <Button
-                      onClick={() => handleLinkDelete(link.id)}
-                      className={cn("cursor-pointer")}
-                      variant={"outline"}
-                      disabled={linkIndex === 0}
-                    >
-                      <Trash size={20} />
-                    </Button>
+        <div key={link.id} className="space-y-5">
+          <FormField
+            control={form.control}
+            name={`courseData.${nestedIndex}.links.${linkIndex}.title`}
+            render={({ field }) => (
+              <FormItem>
+                <div className="flex items-center justify-between">
+                  <FormLabel className="text-primary">
+                    Link {linkIndex + 1}
+                  </FormLabel>
+                  <div className="">
+                    {linkIndex === 0 ? (
+                      <Button
+                        className="flex items-center gap-1 text-secondary mb-4"
+                        onClick={() => handleAddLinks(nestedIndex)}
+                        variant={"link"}
+                      >
+                        <ListPlus className="cursor-pointer" />
+                        <p className="font-semibold">Add new Link</p>
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => handleLinkDelete(link.id)}
+                        className={cn("cursor-pointer")}
+                        variant={"outline"}
+                        size={"icon"}
+                      >
+                        <Trash size={20} />
+                      </Button>
+                    )}
                   </div>
-                  <FormControl>
-                    <Input placeholder="Enter Link Title" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                </div>
+                <FormControl>
+                  <Input placeholder="Enter Link Title" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <FormField
-              control={form.control}
-              name={`courseData.${nestedIndex}.links.${linkIndex}.url`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input placeholder="Enter Link Url" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
+          <FormField
+            control={form.control}
+            name={`courseData.${nestedIndex}.links.${linkIndex}.url`}
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input placeholder="Enter Link Url" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
       ))}
-      <Button
-        className="flex items-center gap-1"
-        onClick={() => handleAddLinks(nestedIndex)}
-        variant={"link"}
-      >
-        <ListPlus className="cursor-pointer" />
-        <p className="font-semibold">Add new Link</p>
-      </Button>
     </div>
   );
 };

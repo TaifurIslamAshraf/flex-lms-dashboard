@@ -27,12 +27,22 @@ const FormStep1 = ({ handleNextClick, handlePrevClick, form }: Props) => {
     name: "benefits",
     control: form.control,
   });
+
   const {
     fields: prerequisitesField,
     append: prerequisitesAppend,
     remove: removePrerequisites,
   } = useFieldArray({
     name: "prerequisites",
+    control: form.control,
+  });
+
+  const {
+    fields: detailsField,
+    append: detailsAppend,
+    remove: removeDetails,
+  } = useFieldArray({
+    name: "details",
     control: form.control,
   });
 
@@ -47,6 +57,13 @@ const FormStep1 = ({ handleNextClick, handlePrevClick, form }: Props) => {
     const isValidPrerequisites = await form.trigger("prerequisites");
     if (isValidPrerequisites) {
       prerequisitesAppend({ title: "" });
+    }
+  };
+
+  const handleAddDetails = async () => {
+    const isValidDetails = await form.trigger("details");
+    if (isValidDetails) {
+      detailsAppend({ title: "" });
     }
   };
 
@@ -81,15 +98,26 @@ const FormStep1 = ({ handleNextClick, handlePrevClick, form }: Props) => {
               />
             </div>
             {index > 0 && (
-              <Button variant={"outline"} onClick={() => removeBenefits(index)}>
+              <Button
+                variant={"outline"}
+                size={"icon"}
+                onClick={() => removeBenefits(index)}
+              >
                 <Trash />
+              </Button>
+            )}
+
+            {index === 0 && (
+              <Button
+                variant={"outline"}
+                size={"icon"}
+                onClick={handleAddBenefits}
+              >
+                <Plus size={20} />
               </Button>
             )}
           </div>
         ))}
-        <Button variant={"outline"} onClick={handleAddBenefits}>
-          <Plus size={30} />
-        </Button>
       </div>
 
       <div className="">
@@ -116,17 +144,68 @@ const FormStep1 = ({ handleNextClick, handlePrevClick, form }: Props) => {
             {index > 0 && (
               <Button
                 variant={"outline"}
+                size={"icon"}
                 onClick={() => removePrerequisites(index)}
               >
                 <Trash />
               </Button>
             )}
+
+            {index === 0 && (
+              <Button
+                variant={"outline"}
+                size={"icon"}
+                onClick={handleAddPrerequisites}
+              >
+                <Plus size={20} />
+              </Button>
+            )}
           </div>
         ))}
+      </div>
 
-        <Button variant={"outline"} onClick={handleAddPrerequisites}>
-          <Plus size={30} />
-        </Button>
+      <div className="">
+        <FormLabel className="text-primary">Course Details</FormLabel>
+        {detailsField.map((prere, index) => (
+          <div key={prere.id} className="mb-4 flex gap-2">
+            <div className="grow">
+              <FormField
+                control={form.control}
+                name={`details.${index}.title`}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        placeholder="Enter Your Course Details"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            {index > 0 && (
+              <Button
+                variant={"outline"}
+                size={"icon"}
+                onClick={() => removeDetails(index)}
+              >
+                <Trash />
+              </Button>
+            )}
+
+            {index === 0 && (
+              <Button
+                variant={"outline"}
+                size={"icon"}
+                onClick={handleAddDetails}
+              >
+                <Plus size={20} />
+              </Button>
+            )}
+          </div>
+        ))}
       </div>
 
       <div className="flex items-center justify-end gap-4">

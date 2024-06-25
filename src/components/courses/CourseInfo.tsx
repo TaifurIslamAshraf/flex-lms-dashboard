@@ -9,10 +9,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { useGetCategorySubcategoryQuery } from "@/redux/features/categorize/categorizeApi";
+import { ICategorySubcategory, ISubCategory } from "@/types/category";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   handleNextClick: () => void;
@@ -22,7 +31,20 @@ interface Props {
 
 const CourseInfo = ({ handleNextClick, handlePrevClick, form }: Props) => {
   const [thumbnailPreview, setThumbnailPreview] = useState<any>("");
+  const [subcategory, setSubcategory] = useState<ISubCategory[] | null>(null);
   const thumbnailImg = form.watch("thumbnail");
+
+  const { data } = useGetCategorySubcategoryQuery({});
+  const categorySubcategory: ICategorySubcategory[] = data?.data;
+
+  useEffect(() => {
+    const selectedCategory = form.watch("category");
+    const selectedCategoryData = categorySubcategory?.find(
+      (item) => item?._id === selectedCategory
+    );
+
+    setSubcategory(selectedCategoryData?.subcategory || null);
+  }, [categorySubcategory, form]);
 
   const handleChangeThumbnail = (e: any) => {
     const file = e.target.files[0];
@@ -48,8 +70,10 @@ const CourseInfo = ({ handleNextClick, handlePrevClick, form }: Props) => {
       "level",
       "demoUrl",
       "thumbnail",
+      "category",
+      "subcategory",
+      "courseDuration",
     ]);
-    console.log(stepValid);
 
     if (stepValid) {
       handleNextClick();
@@ -133,6 +157,21 @@ const CourseInfo = ({ handleNextClick, handlePrevClick, form }: Props) => {
           />
         </div>
       </div>
+
+      <FormField
+        control={form.control}
+        name="courseDuration"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="text-primary">Course Duration</FormLabel>
+            <FormControl>
+              <Input placeholder="Enter Course Duration" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
       <div className="flex items-center justify-between gap-5">
         <div className="grow">
           <FormField
@@ -163,6 +202,75 @@ const CourseInfo = ({ handleNextClick, handlePrevClick, form }: Props) => {
                     {...field}
                   />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between gap-5">
+        <div className="grow">
+          <FormField
+            name="category"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-primary">Category</FormLabel>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    const selectedCategory = categorySubcategory?.find(
+                      (item) => item?._id === value
+                    );
+                    setSubcategory(selectedCategory?.subcategory || null);
+                  }}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Course Category" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {categorySubcategory?.map((item: any) => (
+                      <SelectItem key={item?._id} value={item?._id}>
+                        {item?.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="grow">
+          <FormField
+            name="subcategory"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-primary">Subcategory</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Subcategory" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {subcategory &&
+                      subcategory?.map((item: any) => (
+                        <SelectItem key={item?._id} value={item?._id}>
+                          {item?.name}
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}

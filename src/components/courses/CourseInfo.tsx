@@ -57,6 +57,7 @@ const CourseInfo = ({ handleNextClick, handlePrevClick, form }: Props) => {
         }
       };
       render.readAsDataURL(file);
+      form.setValue("thumbnailFile", file);
     }
   };
 

@@ -65,7 +65,7 @@ export interface ICourseData {
 }
 
 export interface ISingleCourse extends ICourse {
-  instructor: IinstructorInfo;
+  instructor?: IinstructorInfo;
   details: { title: string; _id: string }[];
   tags: string;
   level: string;

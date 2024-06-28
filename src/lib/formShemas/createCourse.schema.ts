@@ -12,6 +12,7 @@ export const courseFormSchema = z.object({
   level: z.string().min(1, "Level is required"),
   demoUrl: z.string().url("Invalid URL for demo"),
   thumbnail: z.string().min(1, "Thumbnail is Required"),
+  thumbnailFile: z.any(),
   benefits: z
     .array(
       z.object({
@@ -19,10 +20,10 @@ export const courseFormSchema = z.object({
       })
     )
     .nonempty("Benefits is required"),
-  prerequisites: z
+  prerequistites: z
     .array(
       z.object({
-        title: z.string().min(1, "Prerequisites is required"),
+        title: z.string().min(1, "Prerequistites is required"),
       })
     )
     .nonempty("Prerequisites is required"),
@@ -41,12 +42,14 @@ export const courseFormSchema = z.object({
       videoSection: z.string().min(1, "Video section is required"),
       videoPlayer: z.string().min(1, "Video player is required"),
       videoLength: z.string().min(1, "Video length is required"),
-      links: z.array(
-        z.object({
-          title: z.string().min(1, "Link title is required"),
-          url: z.string().url("Invalid URL for link"),
-        })
-      ),
+      links: z
+        .array(
+          z.object({
+            title: z.string(),
+            url: z.string(),
+          })
+        )
+        .optional(),
     })
   ),
 });

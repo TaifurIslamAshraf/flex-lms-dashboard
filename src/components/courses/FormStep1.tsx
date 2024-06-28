@@ -29,11 +29,11 @@ const FormStep1 = ({ handleNextClick, handlePrevClick, form }: Props) => {
   });
 
   const {
-    fields: prerequisitesField,
+    fields: prerequistitesFields,
     append: prerequisitesAppend,
     remove: removePrerequisites,
   } = useFieldArray({
-    name: "prerequisites",
+    name: "prerequistites",
     control: form.control,
   });
 
@@ -121,19 +121,19 @@ const FormStep1 = ({ handleNextClick, handlePrevClick, form }: Props) => {
       </div>
 
       <div className="">
-        <FormLabel className="text-primary">Course Prerequisites</FormLabel>
-        {prerequisitesField.map((prere, index) => (
+        <FormLabel className="text-primary">Course Prerequistites</FormLabel>
+        {prerequistitesFields.map((prere, index) => (
           <div key={prere.id} className="mb-4 flex gap-2">
             <div className="grow">
               <FormField
                 control={form.control}
-                name={`prerequisites.${index}.title`}
+                name={`prerequistites.${index}.title`}
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Enter Your Course prerequisites"
+                        placeholder="Enter Your Course prerequistites"
                       />
                     </FormControl>
                     <FormMessage />

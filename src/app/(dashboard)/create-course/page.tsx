@@ -3,6 +3,7 @@
 import * as z from "zod";
 
 import { styles } from "@/app/styles";
+import { LoadingButton } from "@/components/LoaderButton";
 import CourseFormSteps from "@/components/courses/CourseFormSteps";
 import CourseInfo from "@/components/courses/CourseInfo";
 import CoursePreview from "@/components/courses/CoursePreview";
@@ -13,9 +14,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import { courseFormSchema } from "@/lib/formShemas/createCourse.schema";
 import { cn } from "@/lib/utils";
+import { useCreateCourseMutation } from "@/redux/features/courses/courseApi";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 interface Props {
   formStep: number;
@@ -44,7 +49,7 @@ const CreateCourse = () => {
       demoUrl: "",
       thumbnail: "",
       benefits: [{ title: "" }],
-      prerequisites: [{ title: "" }],
+      prerequistites: [{ title: "" }],
       courseData: [
         {
           videoTitle: "",
@@ -63,12 +68,34 @@ const CreateCourse = () => {
       ],
     },
   });
-  const [formStep, setFormStep] = useState(2);
+  const [formStep, setFormStep] = useState(0);
   const [isCollapsed, setIsCollapsed] = useState<boolean[]>([]);
+  const session = useSession();
+  const router = useRouter();
 
-  const handleCreateCourse = (data: z.infer<typeof courseFormSchema>) => {
-    console.log(data);
+  const [createCourse, { isLoading, isSuccess, error }] =
+    useCreateCourseMutation();
+
+  const handleCreateCourse = async (data: z.infer<typeof courseFormSchema>) => {
+    const formData = new FormData();
+
+    console.log(data?.thumbnailFile);
+
+    await createCourse({
+      payload: data,
+      accessToken: session.data?.accessToken,
+    });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Course Create Successfull");
+      router.replace("/courses");
+    } else if (error) {
+      const errorData = error as any;
+      toast.error(errorData?.data?.message);
+    }
+  }, [error, isSuccess, router]);
 
   const handleCollapseToggle = (index: number) => {
     const updatedCollapsed = [...isCollapsed];
@@ -125,7 +152,14 @@ const CreateCourse = () => {
                   form={CourseForm}
                 />
               )}
-              <Button type="submit">Submit</Button>
+              {formStep === 3 &&
+                (isLoading ? (
+                  <LoadingButton />
+                ) : (
+                  <Button type="submit" className="w-full">
+                    Submit
+                  </Button>
+                ))}
             </form>
           </Form>
         </CardContent>

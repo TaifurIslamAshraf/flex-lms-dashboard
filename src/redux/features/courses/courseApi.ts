@@ -13,7 +13,18 @@ export const courseApi = apiSlice.injectEndpoints({
         }
       },
     }),
+
+    createCourse: build.mutation({
+      query: ({ payload, accessToken }) => ({
+        url: "/course/create-course",
+        method: "POST",
+        body: payload,
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useSingleCourseQuery } = courseApi;
+export const { useSingleCourseQuery, useCreateCourseMutation } = courseApi;

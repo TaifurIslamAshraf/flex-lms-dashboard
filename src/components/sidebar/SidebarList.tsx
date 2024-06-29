@@ -3,15 +3,12 @@
 import { cn } from "@/lib/utils";
 import { assests } from "@/utilities/assests";
 import {
-  FilePieChart,
   Layout,
   LayoutDashboard,
-  LineChart,
   ListOrdered,
   LogOut,
   PlaySquare,
   ShoppingBag,
-  UserCog,
   Users,
   Video,
 } from "lucide-react";
@@ -25,7 +22,7 @@ import { Button } from "../ui/button";
 const deshboardMenu = [
   {
     title: "Dashboard",
-    path: "/dashboard",
+    path: "/",
     spacing: true,
     icon: <LayoutDashboard size={17} />,
   },
@@ -34,13 +31,6 @@ const deshboardMenu = [
     path: "/users",
     icon: <Users size={17} />,
   },
-  // {
-  //   title: "Invoices",
-  //   path: "/invoice",
-  //   spacing: true,
-
-  //   icon: <FileText size={17} />,
-  // },
 
   {
     title: "Courses",
@@ -59,11 +49,6 @@ const deshboardMenu = [
     path: "/category",
     icon: <ListOrdered size={17} />,
   },
-  // {
-  //   title: "FAQ",
-  //   path: "/faq",
-  //   icon: <ShieldQuestion size={17} />,
-  // },
 
   {
     title: "Hero",
@@ -71,29 +56,24 @@ const deshboardMenu = [
     icon: <Layout size={17} />,
   },
   {
-    title: "Manage Team",
-    path: "/marageTeam",
+    title: "Manage Orders",
+    path: "/orders",
     spacing: true,
-
-    icon: <UserCog size={17} />,
-  },
-  {
-    title: "Course Analytics",
-    path: "/CourseAnalytics",
-
-    icon: <LineChart size={17} />,
-  },
-  {
-    title: "Order Analytics",
-    path: "/OrderAnalytics",
 
     icon: <ShoppingBag size={17} />,
   },
-  {
-    title: "Users Analytics",
-    path: "/usersAnalytics",
-    icon: <FilePieChart size={17} />,
-  },
+  // {
+  //   title: "Course Analytics",
+  //   path: "/CourseAnalytics",
+
+  //   icon: <LineChart size={17} />,
+  // },
+
+  // {
+  //   title: "Users Analytics",
+  //   path: "/usersAnalytics",
+  //   icon: <FilePieChart size={17} />,
+  // },
 ];
 
 const SidebarList = ({

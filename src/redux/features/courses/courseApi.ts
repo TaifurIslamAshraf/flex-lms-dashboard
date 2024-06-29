@@ -15,16 +15,24 @@ export const courseApi = apiSlice.injectEndpoints({
     }),
 
     createCourse: build.mutation({
-      query: ({ payload, accessToken }) => ({
+      query: ({ payload }) => ({
         url: "/course/create-course",
         method: "POST",
         body: payload,
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
+      }),
+    }),
+
+    deleteCourse: build.mutation({
+      query: ({ id }: { id: string }) => ({
+        url: `/course/delete-course/${id}`,
+        method: "DELETE",
       }),
     }),
   }),
 });
 
-export const { useSingleCourseQuery, useCreateCourseMutation } = courseApi;
+export const {
+  useSingleCourseQuery,
+  useCreateCourseMutation,
+  useDeleteCourseMutation,
+} = courseApi;

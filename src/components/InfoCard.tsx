@@ -8,7 +8,7 @@ type Props = {
 
 const InfoCard: FC<Props> = ({ title, info }) => {
   return (
-    <Card className="p-5 rounded-xl text-center w-[270px]  bg-gradient-to-tr from-sky-300 via-sky-400 to-blue-500">
+    <Card className="p-5 rounded-xl text-center md:max-w-[270px] w-full  bg-gradient-to-tr from-sky-300 via-sky-400 to-blue-500">
       <h1 className="font-bold tracking-wide text-2xl text-green-200 ">
         {title}
       </h1>

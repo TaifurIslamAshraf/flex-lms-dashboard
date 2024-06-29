@@ -12,11 +12,11 @@ import FormStep2 from "@/components/courses/FormStep2";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
+import { customRevalidateTag } from "@/lib/_actions/revalidateTag";
 import { courseFormSchema } from "@/lib/formShemas/createCourse.schema";
 import { cn } from "@/lib/utils";
 import { useCreateCourseMutation } from "@/redux/features/courses/courseApi";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -70,7 +70,6 @@ const CreateCourse = () => {
   });
   const [formStep, setFormStep] = useState(0);
   const [isCollapsed, setIsCollapsed] = useState<boolean[]>([]);
-  const session = useSession();
   const router = useRouter();
 
   const [createCourse, { isLoading, isSuccess, error }] =
@@ -79,12 +78,69 @@ const CreateCourse = () => {
   const handleCreateCourse = async (data: z.infer<typeof courseFormSchema>) => {
     const formData = new FormData();
 
-    console.log(data?.thumbnailFile);
+    // Append simple fields
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("price", data.price);
+    formData.append("estimatedPrice", data.estimatedPrice || "");
+    formData.append("tags", data.tags);
+    formData.append("courseDuration", data.courseDuration);
+    formData.append("category", data.category);
+    formData.append("subcategory", data.subcategory);
+    formData.append("level", data.level);
+    formData.append("demoUrl", data.demoUrl);
 
-    await createCourse({
-      payload: data,
-      accessToken: session.data?.accessToken,
+    // Append file separately
+    if (data.thumbnailFile) {
+      formData.append("thumbnail", data.thumbnailFile);
+    }
+
+    data.benefits.forEach((benefit, index) => {
+      formData.append(`benefits[${index}][title]`, benefit.title);
     });
+
+    data.prerequistites.forEach((prerequisite, index) => {
+      formData.append(`prerequistites[${index}][title]`, prerequisite.title);
+    });
+
+    data.details.forEach((detail, index) => {
+      formData.append(`details[${index}][title]`, detail.title);
+    });
+
+    data.courseData.forEach((course, index) => {
+      formData.append(`courseData[${index}][videoTitle]`, course.videoTitle);
+      formData.append(
+        `courseData[${index}][videoDescription]`,
+        course.videoDescription
+      );
+      formData.append(`courseData[${index}][videoUrl]`, course.videoUrl);
+      formData.append(
+        `courseData[${index}][videoSection]`,
+        course.videoSection
+      );
+      formData.append(`courseData[${index}][videoPlayer]`, course.videoPlayer);
+      formData.append(`courseData[${index}][videoLength]`, course.videoLength);
+
+      if (course.links) {
+        course.links.forEach((link, linkIndex) => {
+          formData.append(
+            `courseData[${index}][links][${linkIndex}][title]`,
+            link.title
+          );
+          formData.append(
+            `courseData[${index}][links][${linkIndex}][url]`,
+            link.url
+          );
+        });
+      }
+    });
+
+    // Send the request
+    await createCourse({
+      payload: formData,
+    });
+
+    await customRevalidateTag("Course");
   };
 
   useEffect(() => {
@@ -154,7 +210,7 @@ const CreateCourse = () => {
               )}
               {formStep === 3 &&
                 (isLoading ? (
-                  <LoadingButton />
+                  <LoadingButton className="w-full" />
                 ) : (
                   <Button type="submit" className="w-full">
                     Submit

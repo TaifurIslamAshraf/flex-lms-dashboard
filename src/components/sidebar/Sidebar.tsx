@@ -10,11 +10,11 @@ import SidebarList from "./SidebarList";
 
 const Sidebar = () => {
   return (
-    <div>
+    <>
       <div className="lg:block hidden">
         <SidebarList
           parantClass={`bg-secondary
-      h-screen transition-all duration-400 group text-[#1B4242] px-3 overflow-y-auto scrollbar-hide z-40 border-r-2 border-r-blue-400/75 w-72 fixed left-0`}
+      h-screen transition-all duration-400 group text-[#1B4242] px-3 overflow-y-auto scrollbar-hide z-40 border-r-2 border-r-blue-400/75 w-72 fixed`}
         />
       </div>
       <div
@@ -47,7 +47,7 @@ const Sidebar = () => {
 
         <ProfilePicture />
       </div>
-    </div>
+    </>
   );
 };
 

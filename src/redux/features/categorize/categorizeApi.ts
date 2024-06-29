@@ -28,6 +28,40 @@ export const categorizeApi = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    createCategory: build.mutation({
+      query: ({ data }) => ({
+        url: "/category/create-category",
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+    }),
+
+    createSubcategory: build.mutation({
+      query: ({ data }) => ({
+        url: "/subcategory/create-subcategory",
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+    }),
+
+    deleteCategory: build.mutation({
+      query: ({ id }) => ({
+        url: `/category/delete-category/${id}`,
+        method: "DELETE",
+        credentials: "include",
+      }),
+    }),
+
+    deleteSubcategory: build.mutation({
+      query: ({ id }) => ({
+        url: `/subcategory/delete-subcategory/${id}`,
+        method: "DELETE",
+        credentials: "include",
+      }),
+    }),
   }),
 });
 
@@ -36,4 +70,8 @@ export const {
   useGetAllCategoryQuery,
   useGetSubcategoryQuery,
   useGetCategorySubcategoryQuery,
+  useCreateCategoryMutation,
+  useCreateSubcategoryMutation,
+  useDeleteCategoryMutation,
+  useDeleteSubcategoryMutation,
 } = categorizeApi;

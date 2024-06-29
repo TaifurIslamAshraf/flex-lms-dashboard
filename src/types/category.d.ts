@@ -22,15 +22,18 @@ export interface ICourseSubcategory {
 [];
 
 export interface ISubCategory {
-  category: string;
-  createdAt?: string;
   _id: string;
   name: string;
   slug: string;
-  updatedAt?: string;
-  _v: number;
 }
 
-export interface ICategorySubcategory extends ICateogry {
-  subcategory: ISubCategory[];
-}
+export type ICategorySubcategory = {
+  name: string;
+  slug: string;
+  _id: string;
+  subcategory?: {
+    name: string;
+    slug: string;
+    _id: string;
+  }[];
+}[];

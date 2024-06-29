@@ -68,13 +68,10 @@ export const authApi = apiSlice.injectEndpoints({
     }),
 
     getMe: build.query({
-      query: ({ accessToken }) => ({
+      query: ({}) => ({
         url: "/users/me",
         method: "GET",
         credentials: "include",
-        headers: {
-          authorization: `Bearer ${accessToken}`,
-        },
       }),
       invalidatesTags: ["Users"] as any,
 

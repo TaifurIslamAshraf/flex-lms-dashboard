@@ -29,8 +29,8 @@ export default function RootLayout({
     <html lang="en">
       <ReduxProvider>
         <AuthProvider>
-          <body className={poppins.className}>
-            <main className={cn(styles.layout)}>
+          <body className={cn(styles.layout, poppins.className)}>
+            <main>
               {children}
               <Toaster position="top-center" reverseOrder={false} />
             </main>

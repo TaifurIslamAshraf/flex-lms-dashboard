@@ -10,7 +10,7 @@ export default function Home() {
         <h1 className="font-extrabold text-muted-foreground text-2xl">
           Overview
         </h1>
-        <div className="flex items-center gap-6">
+        <div className="md:flex block items-center md:gap-6 md:space-y-0 space-y-4">
           <InfoCard title="Total Courses" info="4" />
           <InfoCard title="Most Purchased" info="6" />
         </div>

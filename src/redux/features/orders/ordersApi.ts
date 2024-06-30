@@ -3,10 +3,19 @@ import { apiSlice } from "../apiSlice/apiSlice";
 export const ordersApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
     getAllOrders: build.query({
-      query: () => ({
+      query: ({
+        orderStatus,
+        page,
+      }: {
+        orderStatus: string;
+        page: string;
+      }) => ({
         url: "/order/all-orders",
         method: "GET",
-
+        params: {
+          orderStatus,
+          page,
+        },
         credentials: "include" as const,
       }),
     }),

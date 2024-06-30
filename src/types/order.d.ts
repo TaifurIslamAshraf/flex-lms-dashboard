@@ -1,14 +1,27 @@
-export type IOrder = {
+interface Item {
+  course: string;
+  price: number;
   _id: string;
-  user: string;
+}
+
+interface UserInfo {
+  name: string;
+  email: string;
+}
+
+export interface IOrder {
+  _id: string;
   accountType: string;
-  accountNumber: string;
-  transactionId: string;
+  orderStatus: string;
   phone: string;
-  orderStatus: "Approved" | "Pending" | "Rejected";
+  items: Item[];
+  userInfo: UserInfo;
   orderedAt: Date;
-  items: {
-    course: string;
-    price: number;
-  }[];
-};
+}
+
+export interface IMeta {
+  totalPage: number;
+  currentPage: number;
+  nextPage: number | null;
+  prevPage: number | null;
+}

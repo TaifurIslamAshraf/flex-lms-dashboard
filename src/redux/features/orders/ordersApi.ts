@@ -7,8 +7,8 @@ export const ordersApi = apiSlice.injectEndpoints({
         orderStatus,
         page,
       }: {
-        orderStatus: string;
-        page: string;
+        orderStatus?: string;
+        page?: string;
       }) => ({
         url: "/order/all-orders",
         method: "GET",
@@ -16,6 +16,14 @@ export const ordersApi = apiSlice.injectEndpoints({
           orderStatus,
           page,
         },
+        credentials: "include" as const,
+      }),
+    }),
+
+    getSingleOrder: build.query({
+      query: (id: string) => ({
+        url: `/order/single-order/${id}`,
+        method: "GET",
         credentials: "include" as const,
       }),
     }),
@@ -28,7 +36,23 @@ export const ordersApi = apiSlice.injectEndpoints({
         credentials: "include" as const,
       }),
     }),
+
+    updateOrder: build.mutation({
+      query: ({ id, orderStatus }: { id: string; orderStatus: string }) => ({
+        url: `/order/update-order/${id}`,
+        method: "PUT",
+        body: {
+          orderStatus,
+        },
+        credentials: "include" as const,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllOrdersQuery, useDeleteOrderMutation } = ordersApi;
+export const {
+  useGetAllOrdersQuery,
+  useDeleteOrderMutation,
+  useGetSingleOrderQuery,
+  useUpdateOrderMutation,
+} = ordersApi;

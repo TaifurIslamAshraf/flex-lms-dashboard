@@ -24,10 +24,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
+import { LoadingButton } from "@/components/LoaderButton";
 import { updateUser } from "@/redux/features/auth/authSlice";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 
@@ -41,6 +42,7 @@ const loginFormSchema = z.object({
 
 const Login = () => {
   const router = useRouter();
+  const [isLoadng, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
   const session = useSession();
@@ -54,6 +56,7 @@ const Login = () => {
   });
 
   const handleOnSubmit = async (value: z.infer<typeof loginFormSchema>) => {
+    setIsLoading(true);
     const signinData = await signIn("credentials", {
       email: value.email,
       password: value.password,
@@ -62,9 +65,11 @@ const Login = () => {
 
     if (signinData?.status === 401) {
       toast.error("Invalid Email or Password");
+      setIsLoading(false);
     } else if (signinData?.ok) {
       router.push("/");
       router.refresh();
+      setIsLoading(false);
     }
   };
 
@@ -120,9 +125,13 @@ const Login = () => {
                 <Link href={"/forgotPassword"}>Forgot Password?</Link>
               </div>
 
-              <Button className="w-full" type="submit">
-                Sign In
-              </Button>
+              {isLoadng ? (
+                <LoadingButton className="w-full" />
+              ) : (
+                <Button className="w-full" type="submit">
+                  Sign In
+                </Button>
+              )}
             </form>
           </Form>
         </CardContent>

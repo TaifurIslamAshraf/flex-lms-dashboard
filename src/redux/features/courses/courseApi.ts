@@ -14,10 +14,25 @@ export const courseApi = apiSlice.injectEndpoints({
       },
     }),
 
+    singleCourseByAdmin: build.query({
+      query: (slug: string) => ({
+        url: `/course/admin-single-course/${slug}`,
+        method: "GET",
+      }),
+    }),
+
     createCourse: build.mutation({
       query: ({ payload }) => ({
         url: "/course/create-course",
         method: "POST",
+        body: payload,
+      }),
+    }),
+
+    updateCourse: build.mutation({
+      query: ({ payload, id }) => ({
+        url: `/course/update-course/${id}`,
+        method: "PUT",
         body: payload,
       }),
     }),
@@ -35,4 +50,6 @@ export const {
   useSingleCourseQuery,
   useCreateCourseMutation,
   useDeleteCourseMutation,
+  useSingleCourseByAdminQuery,
+  useUpdateCourseMutation,
 } = courseApi;

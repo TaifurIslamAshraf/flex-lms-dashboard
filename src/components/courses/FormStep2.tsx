@@ -69,7 +69,7 @@ const FormStep2 = ({
         videoSection: `Untitled Section ${courseDataLength}`,
         videoPlayer: "",
         videoLength: "",
-        links: [
+        videoResource: [
           {
             title: "",
             url: "",

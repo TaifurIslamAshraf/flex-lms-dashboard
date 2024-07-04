@@ -20,7 +20,7 @@ interface INestedProps {
 
 const NestedLinkArray = ({ nestedIndex, form }: INestedProps) => {
   const { fields, append, remove } = useFieldArray({
-    name: `courseData.${nestedIndex}.links`,
+    name: `courseData.${nestedIndex}.videoResource`,
   });
 
   const handleLinkDelete = (linkId: string) => {
@@ -31,8 +31,10 @@ const NestedLinkArray = ({ nestedIndex, form }: INestedProps) => {
     }
   };
 
-  const handleAddLinks = async (nestedIndex: number) => {
-    const isValid = await form.trigger(`courseData.${nestedIndex}.links`);
+  const handleAddVideoResource = async (nestedIndex: number) => {
+    const isValid = await form.trigger(
+      `courseData.${nestedIndex}.videoResource`
+    );
     if (isValid) {
       append({
         title: "",
@@ -47,7 +49,7 @@ const NestedLinkArray = ({ nestedIndex, form }: INestedProps) => {
         <div key={link.id} className="space-y-5">
           <FormField
             control={form.control}
-            name={`courseData.${nestedIndex}.links.${linkIndex}.title`}
+            name={`courseData.${nestedIndex}.videoResource.${linkIndex}.title`}
             render={({ field }) => (
               <FormItem>
                 <div className="flex items-center justify-between">
@@ -58,7 +60,7 @@ const NestedLinkArray = ({ nestedIndex, form }: INestedProps) => {
                     {linkIndex === 0 ? (
                       <Button
                         className="flex items-center gap-1 text-secondary mb-4"
-                        onClick={() => handleAddLinks(nestedIndex)}
+                        onClick={() => handleAddVideoResource(nestedIndex)}
                         variant={"link"}
                       >
                         <ListPlus className="cursor-pointer" />
@@ -86,7 +88,7 @@ const NestedLinkArray = ({ nestedIndex, form }: INestedProps) => {
 
           <FormField
             control={form.control}
-            name={`courseData.${nestedIndex}.links.${linkIndex}.url`}
+            name={`courseData.${nestedIndex}.videoResource.${linkIndex}.url`}
             render={({ field }) => (
               <FormItem>
                 <FormControl>

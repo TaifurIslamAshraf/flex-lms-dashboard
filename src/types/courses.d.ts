@@ -133,7 +133,7 @@ export interface IUserCourses {
   completedVideoLength: number;
 }
 
-export interface IUserSingleCourse {
+export type IUserSingleCourse = {
   user: string;
   enrolledAt?: Date;
   completed: boolean;
@@ -169,7 +169,37 @@ export interface IUserSingleCourse {
     updatedAt?: string;
     __v: number;
   };
-}
+};
+
+export type IAdminCourse = {
+  _id: string;
+  name: string;
+  slug: string;
+  description: string;
+  subcategory: string;
+  category: string;
+  price: number;
+  estimatedPrice?: number;
+  thumbnail: string;
+  tags: string;
+  level: "beginner" | "intermediate" | "expert";
+  demoUrl: string;
+  details: { title: string; _id: string }[];
+  benefits: Benefit[];
+  prerequistites: Prerequisite[];
+  courseDuration: string;
+  materialIncludes: string[];
+  reviews: IReview[];
+  courseData: {
+    videoTitle?: string;
+    videoDescription?: string;
+    videoUrl?: string;
+    videoSection?: string;
+    videoPlayer?: string;
+    videoLength?: string; // Change this to string
+    videoResource?: { title?: string; url?: string }[];
+  }[];
+};
 
 export interface IBestSellingCourse {
   _id: string;

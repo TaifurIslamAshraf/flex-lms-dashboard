@@ -58,7 +58,7 @@ const CreateCourse = () => {
           videoPlayer: "",
           videoLength: "",
           videoSection: "Untitled Section",
-          links: [
+          videoResource: [
             {
               title: "",
               url: "",
@@ -121,8 +121,8 @@ const CreateCourse = () => {
       formData.append(`courseData[${index}][videoPlayer]`, course.videoPlayer);
       formData.append(`courseData[${index}][videoLength]`, course.videoLength);
 
-      if (course.links) {
-        course.links.forEach((link, linkIndex) => {
+      if (course.videoResource) {
+        course.videoResource.forEach((link, linkIndex) => {
           formData.append(
             `courseData[${index}][links][${linkIndex}][title]`,
             link.title

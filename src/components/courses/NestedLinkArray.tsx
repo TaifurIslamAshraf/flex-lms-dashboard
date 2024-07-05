@@ -62,6 +62,7 @@ const NestedLinkArray = ({ nestedIndex, form }: INestedProps) => {
                         className="flex items-center gap-1 text-secondary mb-4"
                         onClick={() => handleAddVideoResource(nestedIndex)}
                         variant={"link"}
+                        type="button"
                       >
                         <ListPlus className="cursor-pointer" />
                         <p className="font-semibold">Add new Link</p>

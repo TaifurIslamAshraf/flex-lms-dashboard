@@ -35,7 +35,7 @@ const CourseInfo = ({ handleNextClick, handlePrevClick, form }: Props) => {
   const thumbnailImg = form.watch("thumbnail");
 
   const { data } = useGetCategorySubcategoryQuery({});
-  const categorySubcategory: ICategorySubcategory[] = data?.data;
+  const categorySubcategory: ICategorySubcategory = data?.data;
 
   useEffect(() => {
     const selectedCategory = form.watch("category");
@@ -47,7 +47,7 @@ const CourseInfo = ({ handleNextClick, handlePrevClick, form }: Props) => {
   }, [categorySubcategory, form]);
 
   const handleChangeThumbnail = (e: any) => {
-    const file = e.target.files[0];
+    const file: File = e.target.files[0];
     if (file) {
       const render = new FileReader();
       render.onload = (e: any) => {

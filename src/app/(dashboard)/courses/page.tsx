@@ -1,5 +1,5 @@
 import { styles } from "@/app/styles";
-import CourseAction from "@/components/ProductAction";
+import CourseAction from "@/components/CourseAction";
 import Search from "@/components/Search";
 import { Button } from "@/components/ui/button";
 import config from "@/config/config";

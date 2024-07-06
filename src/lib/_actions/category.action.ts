@@ -1,6 +1,8 @@
 "use server";
 
-import { serverApi } from "../utils";
+import config from "@/config/config";
+
+const serverApi = config.serverApi;
 
 export const getAllCategory = async () => {
   const res = await fetch(`${serverApi}/category/get-all-category`, {

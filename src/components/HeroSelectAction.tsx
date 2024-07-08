@@ -1,7 +1,7 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { customRevalidateTag } from "@/lib/_actions/revalidateTag";
+import { handleRevalidation } from "@/lib/_actions/revalidateTag";
 import { useUpdateLayoutMutation } from "@/redux/features/layout/layoutApi";
 import { ILayoutData } from "@/types/layout";
 import { useEffect } from "react";
@@ -24,7 +24,7 @@ const HeroSelectAction = ({ layout }: Props) => {
 
   const handleSelectChange = async (id: string) => {
     await updateLayout({ id, payload });
-    await customRevalidateTag("Layout");
+    await handleRevalidation("Layout");
   };
 
   useEffect(() => {

@@ -7,11 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import { customRevalidateTag } from "@/lib/_actions/revalidateTag";
-import {
-  useDeleteLayoutMutation,
-  useUpdateLayoutMutation,
-} from "@/redux/features/layout/layoutApi";
+import { handleRevalidation } from "@/lib/_actions/revalidateTag";
+import { useDeleteLayoutMutation } from "@/redux/features/layout/layoutApi";
 import { AlertPopup } from "./Dialog/alertDialog";
 import UpdateLayout from "./UpdateLayout";
 
@@ -25,14 +22,10 @@ const LayoutAction: FC<Props> = ({ id }) => {
   const [deleteLaout, { isLoading, isSuccess, error }] =
     useDeleteLayoutMutation();
 
-  const [updateLayout] = useUpdateLayoutMutation();
-
   const handleDeleteLaout = async () => {
     await deleteLaout(id);
-    await customRevalidateTag("Layout");
+    await handleRevalidation("Layout");
   };
-
-  const handleUpdateLayout = async () => {};
 
   useEffect(() => {
     if (isSuccess) {

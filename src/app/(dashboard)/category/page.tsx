@@ -3,6 +3,7 @@
 import { styles } from "@/app/styles";
 import CreateCategory from "@/components/CreateCategory";
 import CreateSubategory from "@/components/CreateSubcategory";
+import { AlertPopup } from "@/components/Dialog/alertDialog";
 import { cn } from "@/lib/utils";
 import {
   useDeleteCategoryMutation,
@@ -101,13 +102,16 @@ const CategorySubcategory = () => {
                 >
                   <div className="flex items-center justify-between">
                     <span>{item?.name}</span>
-                    <button
-                      disabled={categoryIsLoading}
-                      onClick={() => handleDeleteCategory(item?._id)}
-                      className="group-hover:block hidden rounded bg-gray-50 p-1"
+                    <AlertPopup
+                      actionFunc={() => handleDeleteCategory(item?._id)}
                     >
-                      <Trash2 className="text-red-400" size={20} />
-                    </button>
+                      <button
+                        disabled={categoryIsLoading}
+                        className="group-hover:block hidden rounded bg-gray-50 p-1"
+                      >
+                        <Trash2 className="text-red-400" size={20} />
+                      </button>
+                    </AlertPopup>
                   </div>
                 </li>
               );
@@ -124,12 +128,18 @@ const CategorySubcategory = () => {
                     >
                       <div className="flex items-center justify-between">
                         <span>{subItem?.name}</span>
-                        <button
-                          onClick={() => handleDeletesubCategory(subItem?._id)}
-                          className="group-hover:block hidden rounded bg-gray-50 p-1"
+                        <AlertPopup
+                          actionFunc={() =>
+                            handleDeletesubCategory(subItem?._id)
+                          }
                         >
-                          <Trash2 className="text-red-400" size={20} />
-                        </button>
+                          <button
+                            disabled={categoryIsLoading}
+                            className="group-hover:block hidden rounded bg-gray-50 p-1"
+                          >
+                            <Trash2 className="text-red-400" size={20} />
+                          </button>
+                        </AlertPopup>
                       </div>
                     </li>
                   ))}

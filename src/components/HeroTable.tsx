@@ -22,9 +22,9 @@ export async function HeroTable() {
       <TableCaption>A list of your Layouts.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="">Select</TableHead>
-          <TableHead className="">Image</TableHead>
-          <TableHead>Title</TableHead>
+          <TableHead className="min-w-[100px]">Select</TableHead>
+          <TableHead className="min-w-[100px]">Image</TableHead>
+          <TableHead className="min-w-[250px]">Title</TableHead>
           <TableHead>Action</TableHead>
         </TableRow>
       </TableHeader>

@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { handleRevalidation } from "@/lib/_actions/revalidateTag";
 import {
   useCreateSubcategoryMutation,
   useGetAllCategoryQuery,
@@ -57,6 +58,7 @@ const CreateSubategory = () => {
       data: value,
     });
     await refetch();
+    await handleRevalidation("Category");
   };
 
   useEffect(() => {

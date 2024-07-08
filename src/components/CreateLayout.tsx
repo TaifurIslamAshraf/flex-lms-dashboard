@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { customRevalidateTag } from "@/lib/_actions/revalidateTag";
+import { handleRevalidation } from "@/lib/_actions/revalidateTag";
 import { cn } from "@/lib/utils";
 import { useCreateLayoutMutation } from "@/redux/features/layout/layoutApi";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -74,7 +74,8 @@ const CreateLayout = () => {
     });
 
     await createLayout(formData);
-    await customRevalidateTag("Layout");
+
+    await handleRevalidation("Layout");
   };
 
   useEffect(() => {

@@ -1,7 +1,16 @@
 import { styles } from "@/app/styles";
 import CourseAction from "@/components/CourseAction";
+import Paginations from "@/components/Paginations";
 import Search from "@/components/Search";
 import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import config from "@/config/config";
 import { getAllCourses } from "@/lib/_actions/course.action";
 import { cn } from "@/lib/utils";
@@ -20,7 +29,14 @@ const Courses: FC<Props> = async ({ searchParams }) => {
   const serverUrl = config.serverURl;
 
   return (
-    <div className={cn(styles.paddingY, styles.paddingX, styles.layoutML)}>
+    <div
+      className={cn(
+        styles.paddingY,
+        styles.paddingX,
+        styles.layoutML,
+        "overflow-x-hidden"
+      )}
+    >
       <div className="space-y-6">
         <h1 className="font-semibold text-2xl">All Products</h1>
         <div className="flex items-center justify-start flex-col gap-3">
@@ -35,43 +51,42 @@ const Courses: FC<Props> = async ({ searchParams }) => {
               </Link>
             )}
           </div>
-          <table className="border-collapse border-2 border-slate-300 p-4 w-full">
-            <thead>
-              <tr className="">
-                <th className="border-2 border-slate-300 px-4 py-1">Image</th>
-                <th className="border-2 border-slate-300 px-4 py-1">Name</th>
-                <th className="border-2 border-slate-300 px-4 py-1">Price</th>
-                <th className="border-2 border-slate-300 px-4 py-1">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {courses &&
-                courses?.map((item: ICourse) => (
-                  <tr key={item._id}>
-                    <td className="border-2 border-slate-300 px-4 py-2">
-                      <Image
-                        src={`${serverUrl}/${item?.thumbnail}`}
-                        alt={item.name}
-                        width={60}
-                        height={60}
-                      />
-                    </td>
-                    <td className="border-2 border-slate-300 px-4 py-2">
-                      <Link href={`/products/${item?.slug}`}>{item?.name}</Link>
-                    </td>
-
-                    <td className="border-2 border-slate-300 px-4 py-2">
-                      {item?.price}
-                    </td>
-                    <td className="border-2 border-slate-300 px-4 py-2">
-                      <CourseAction course={item} />
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+          <div className="overflow-x-auto w-full">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="min-w-[100px]">Image</TableHead>
+                  <TableHead className="min-w-[300px]">Name</TableHead>
+                  <TableHead className="min-w-[100px]">Price</TableHead>
+                  <TableHead>Action</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {courses &&
+                  courses.map((items) => (
+                    <TableRow key={items?._id}>
+                      <TableCell className="font-medium">
+                        <Image
+                          src={`${serverUrl}/${items.thumbnail}`}
+                          alt={items.name}
+                          width={40}
+                          height={40}
+                        />
+                      </TableCell>
+                      <TableCell>{items?.name}</TableCell>
+                      <TableCell>{items?.price}</TableCell>
+                      <TableCell>
+                        <CourseAction course={items} />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </div>
         </div>
-        {/* <Paginations type="admin" pagination={products?.pagination} /> */}
+        {data?.data && data?.data?.pagination?.totalPage > 1 && (
+          <Paginations type="allCourse" pagination={data?.data?.meta} />
+        )}
       </div>
     </div>
   );

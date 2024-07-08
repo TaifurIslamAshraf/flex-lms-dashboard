@@ -2,6 +2,7 @@ const config = {
   env: process.env.NEXT_PUBLIC_NODE_ENV,
   serverApi: process.env.NEXT_PUBLIC_SERVER_API as string,
   serverURl: process.env.NEXT_PUBLIC_SERVER_URL as string,
+  clientApi: process.env.NEXT_PUBLIC_BASE_CLIENT_SERVER as string,
   main_domain: process.env.NEXT_PUBLIC_MAIN_DOMAIN,
   base_url: process.env.NEXT_PUBLIC_BASE_URL,
   base_client_url: process.env.NEXT_PUBLIC_BASE_CLIENT_URL,

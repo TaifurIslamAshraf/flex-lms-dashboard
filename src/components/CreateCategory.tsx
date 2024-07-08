@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { handleRevalidation } from "@/lib/_actions/revalidateTag";
 import {
   useCreateCategoryMutation,
   useGetAllCategoryQuery,
@@ -44,6 +45,7 @@ const CreateCategory = () => {
       data: value,
     });
     await refetch();
+    await handleRevalidation("Category");
   };
 
   useEffect(() => {

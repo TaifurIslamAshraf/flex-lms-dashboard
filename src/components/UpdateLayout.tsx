@@ -20,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import config from "@/config/config";
-import { customRevalidateTag } from "@/lib/_actions/revalidateTag";
+import { handleRevalidation } from "@/lib/_actions/revalidateTag";
 import { cn } from "@/lib/utils";
 import {
   useGetSingleLayoutQuery,
@@ -97,7 +97,7 @@ const UpdateLayout = ({ id }: Props) => {
     });
 
     await updateLayout({ id, payload: formData });
-    await customRevalidateTag("Layout");
+    await handleRevalidation("Layout");
   };
 
   useEffect(() => {
@@ -123,7 +123,7 @@ const UpdateLayout = ({ id }: Props) => {
       <DialogTrigger className="bg-primary hover:bg-secondary hover:text-primary transition-all shadow-sm text-white p-2 rounded-md">
         <FilePenLine size={20} />
       </DialogTrigger>
-      <DialogContent className="max-h-[500px] h-full scrollbar-thin">
+      <DialogContent className="max-h-[500px] h-full w-full scrollbar-thin">
         <DialogHeader>
           <DialogTitle>Update Layout</DialogTitle>
         </DialogHeader>

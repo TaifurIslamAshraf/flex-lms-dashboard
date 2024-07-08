@@ -10,6 +10,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { useGetAllOrdersQuery } from "@/redux/features/orders/ordersApi";
 
 import { styles } from "@/app/styles";
@@ -92,75 +100,65 @@ const AllOrders: FC<Props> = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <table className="border-collapse border-2 border-slate-300 p-4">
-                <thead>
-                  <tr>
-                    <th className="border-2 border-slate-200 px-4 py-2">
-                      Name
-                    </th>
-                    <th className="border-2 border-slate-200 px-4 py-2">
-                      Order Status
-                    </th>
-                    <th className="border-2 border-slate-200 px-4 py-2">
-                      Total Amount
-                    </th>
-                    <th className="border-2 border-slate-200 px-4 py-2">
-                      Placed Date
-                    </th>
+              <div className="w-full overflow-auto">
+                <Table className="">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="min-w-[140px]">Name</TableHead>
+                      <TableHead className="min-w-[140px]">
+                        Order Status
+                      </TableHead>
+                      <TableHead className="min-w-[140px]">
+                        Total Amount
+                      </TableHead>
+                      <TableHead className="min-w-[140px]">
+                        Placed Date
+                      </TableHead>
+                      <TableHead>Action</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {orders &&
+                      orders.map((items) => (
+                        <TableRow key={items?._id}>
+                          <TableCell>{items?.userInfo?.name}</TableCell>
+                          <TableCell
+                            className={cn(
+                              items.orderStatus === "Pending" &&
+                                "text-blue-400",
+                              items.orderStatus === "Approved" &&
+                                "text-yellow-400",
+                              items.orderStatus === "Rejected" && "text-red-400"
+                            )}
+                          >
+                            {items?.orderStatus}
+                          </TableCell>
+                          <TableCell>
+                            {items.items?.reduce(
+                              (acc, curr) => acc + curr.price,
+                              0
+                            )}
+                          </TableCell>
 
-                    <th className="border-2 border-slate-200 px-4 py-2">
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {orders ? (
-                    orders?.map((item: IOrder) => (
-                      <tr
-                        key={item._id}
-                        className="hover:bg-gray-50 transition-all duration-300"
-                      >
-                        <td className="border-2 border-slate-200 px-4 py-2">
-                          {item?.userInfo?.name}
-                        </td>
-                        <td
-                          className={cn(
-                            item.orderStatus === "Pending" && "text-blue-400",
-                            item.orderStatus === "Delivered" &&
-                              "text-yellow-400",
-                            item.orderStatus === "Cancelled" && "text-red-400",
-                            "border-2 border-slate-200 px-4 py-2"
-                          )}
-                        >
-                          {item.orderStatus}
-                        </td>
-                        <td className="border-2 border-slate-200 px-4 py-2">
-                          {item.items?.reduce(
-                            (acc, curr) => acc + curr.price,
-                            0
-                          )}
-                        </td>
-                        <td className="border-2 border-slate-200 px-4 py-2">
-                          {new Date(item.orderedAt).toLocaleDateString(
-                            "en-US",
-                            {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            }
-                          )}
-                        </td>
+                          <TableCell>
+                            {new Date(items.orderedAt).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              }
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            <OrderAction id={items?._id} />
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </div>
 
-                        <td className="border-2 border-slate-200 px-4 py-2">
-                          <OrderAction id={item._id} />
-                        </td>
-                      </tr>
-                    ))
-                  ) : (
-                    <div className=""></div>
-                  )}
-                </tbody>
-              </table>
               <div className="flex items-center gap-6">
                 <Button
                   size={"icon"}

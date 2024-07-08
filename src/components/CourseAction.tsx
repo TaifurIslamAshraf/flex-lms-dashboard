@@ -4,7 +4,7 @@ import { FC, useEffect } from "react";
 import toast from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
-import { customRevalidateTag } from "@/lib/_actions/revalidateTag";
+import { handleRevalidation } from "@/lib/_actions/revalidateTag";
 import { useDeleteCourseMutation } from "@/redux/features/courses/courseApi";
 import { FilePenLine, Trash } from "lucide-react";
 import Link from "next/link";
@@ -29,7 +29,8 @@ const CourseAction: FC<Props> = ({ course }) => {
       id: courseId,
     });
 
-    await customRevalidateTag("Course");
+    await handleRevalidation("User_Course");
+    await handleRevalidation("Course");
     router.refresh();
   };
 

@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
 import config from "@/config/config";
-import { customRevalidateTag } from "@/lib/_actions/revalidateTag";
+import { handleRevalidation } from "@/lib/_actions/revalidateTag";
 import { updateCourseFormSchema } from "@/lib/formShemas/createCourse.schema";
 import { cn } from "@/lib/utils";
 import {
@@ -180,7 +180,8 @@ const UpdateCourse: FC<Props> = ({ params }) => {
       id: singleCourseData?._id,
     });
 
-    await customRevalidateTag("Course");
+    await handleRevalidation("User_Course");
+    await handleRevalidation("Course");
   };
 
   useEffect(() => {

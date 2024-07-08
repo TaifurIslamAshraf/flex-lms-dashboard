@@ -19,7 +19,7 @@ const ProfilePicture = ({
   const session = useSession();
 
   const {} = useGetMeQuery({ accessToken: session?.data?.accessToken });
-  const { user } = useAppSelector((state) => state.auth);
+  const { user } = useAppSelector((state: any) => state.auth);
 
   const avatar = user?.avatar;
 

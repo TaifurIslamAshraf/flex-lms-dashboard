@@ -57,11 +57,10 @@ export const authApi = apiSlice.injectEndpoints({
     }),
 
     updateUserRole: build.mutation({
-      query: ({ data }) => ({
-        url: "/user/update-role",
+      query: (payload) => ({
+        url: "/users/update-role",
         method: "PUT",
-        body: data,
-
+        body: payload,
         credentials: "include",
       }),
       invalidatesTags: ["Users"] as any,

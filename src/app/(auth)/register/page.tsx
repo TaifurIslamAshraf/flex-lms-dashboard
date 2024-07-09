@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 
+import Activation from "@/components/Activation";
 import { LoadingButton } from "@/components/LoaderButton";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,7 +26,7 @@ import { useRegisterMutation } from "@/redux/features/auth/authApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -56,6 +57,7 @@ const registerFormSchema = z
 
 const Register = () => {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   const form = useForm<z.infer<typeof registerFormSchema>>({
     resolver: zodResolver(registerFormSchema),
@@ -77,9 +79,9 @@ const Register = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Sign up successfull");
+      toast.success("Send Activation Code in you mail");
+      setOpen(true);
       form.reset();
-      router.replace("/login");
     } else if (error) {
       const newError = error as any;
       toast.error(newError.data?.message);
@@ -209,6 +211,8 @@ const Register = () => {
           </Link>
         </CardFooter>
       </Card>
+
+      <Activation message={data?.message} open={open} setOpen={setOpen} />
     </div>
   );
 };

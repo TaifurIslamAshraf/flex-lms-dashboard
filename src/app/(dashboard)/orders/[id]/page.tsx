@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import { customRevalidateTag } from "@/lib/_actions/revalidateTag";
 import { cn } from "@/lib/utils";
 import {
   useGetAllOrdersQuery,
@@ -48,6 +49,7 @@ const SingleOrder: FC<Props> = ({ params }) => {
 
     await refetch();
     await orderStatusRefetch();
+    await customRevalidateTag("Order_Update");
   };
 
   useEffect(() => {

@@ -11,7 +11,7 @@ const BestSelling = async () => {
 
   return (
     <div>
-      <h1 className="font-extrabold text-muted-foreground text-2xl mt-10 mb-6">
+      <h1 className="font-semibold text-muted-foreground text-2xl mt-10 mb-6">
         Best Selling
       </h1>
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1  gap-8">

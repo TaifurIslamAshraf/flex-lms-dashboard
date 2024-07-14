@@ -38,7 +38,7 @@ const Courses: FC<Props> = async ({ searchParams }) => {
       )}
     >
       <div className="space-y-6">
-        <h1 className="font-semibold text-2xl">All Products</h1>
+        <h1 className="font-semibold text-2xl">All Courses</h1>
         <div className="flex items-center justify-start flex-col gap-3">
           <div className="w-full flex items-center gap-4">
             <Search />

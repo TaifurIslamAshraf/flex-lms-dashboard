@@ -47,7 +47,7 @@ const YearlySales = () => {
         </CardTitle>
         <CardDescription>Last Year Total Revenue</CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-1 md:p-3 ">
         <ChartContainer className="h-[350px] w-full" config={chartConfig}>
           <BarChart accessibilityLayer data={yearlySales}>
             <CartesianGrid vertical={false} />
@@ -59,7 +59,7 @@ const YearlySales = () => {
               axisLine={false}
               tickFormatter={(value) => value.slice(0, 3)}
             />
-            <YAxis />
+            <YAxis className="" />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}

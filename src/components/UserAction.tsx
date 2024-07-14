@@ -14,7 +14,7 @@ import toast from "react-hot-toast";
 
 type Props = {
   userId: string;
-  role: "admin" | "user" | "instructor";
+  role: "admin" | "user" | "instructor" | "superAdmin";
 };
 
 const UserAction: FC<Props> = ({ userId, role }) => {
@@ -51,6 +51,7 @@ const UserAction: FC<Props> = ({ userId, role }) => {
           <SelectContent>
             <SelectItem value="user">User</SelectItem>
             <SelectItem value="admin">Admin</SelectItem>
+            <SelectItem value="superAdmin">Super Admin</SelectItem>
             <SelectItem value="instructor">Instructor</SelectItem>
           </SelectContent>
         </Select>

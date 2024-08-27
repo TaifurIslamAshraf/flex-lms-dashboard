@@ -5,7 +5,10 @@ export default withAuth({
     authorized: ({ token }) => {
       // Allow access if the user has the admin role
 
-      return !!token && token.user.role === "admin";
+      return (
+        !!token &&
+        (token.user.role === "admin" || token.user.role === "superAdmin")
+      );
     },
   },
   pages: {

@@ -4,6 +4,7 @@ import { styles } from "@/app/styles";
 import CreateCategory from "@/components/CreateCategory";
 import CreateSubategory from "@/components/CreateSubcategory";
 import { AlertPopup } from "@/components/Dialog/alertDialog";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   useDeleteCategoryMutation,
@@ -94,23 +95,24 @@ const CategorySubcategory = () => {
                   onClick={() => handleCategory(item?._id, item?.subcategory)}
                   className={cn(
                     categoryId === item?._id.toString()
-                      ? "bg-blue-500 text-white"
+                      ? "bg-primary/35 text-white"
                       : "",
-                    "text-lg font-medium group cursor-pointer hover:bg-blue-400 hover:text-white transition-all py-1 my-2 px-4"
+                    "text-lg font-medium group cursor-pointer hover:shadow-sm transition-all py-1 my-2 px-4"
                   )}
                   key={item?._id}
                 >
                   <div className="flex items-center justify-between">
-                    <span>{item?.name}</span>
+                    <span className="font-siliguri">{item?.name}</span>
                     <AlertPopup
                       actionFunc={() => handleDeleteCategory(item?._id)}
                     >
-                      <button
+                      <Button
+                        size={"icon"}
                         disabled={categoryIsLoading}
-                        className="group-hover:block hidden rounded bg-gray-50 p-1"
+                        className="bg-primary hover:bg-primary/50"
                       >
-                        <Trash2 className="text-red-400" size={20} />
-                      </button>
+                        <Trash2 className="text-secondary" size={20} />
+                      </Button>
                     </AlertPopup>
                   </div>
                 </li>
@@ -127,18 +129,19 @@ const CategorySubcategory = () => {
                       className="text-lg group font-medium cursor-pointer hover:bg-green-400 hover:text-white transition-all py-1 my-2 px-4"
                     >
                       <div className="flex items-center justify-between">
-                        <span>{subItem?.name}</span>
+                        <span className="font-siliguri">{subItem?.name}</span>
                         <AlertPopup
                           actionFunc={() =>
                             handleDeletesubCategory(subItem?._id)
                           }
                         >
-                          <button
-                            disabled={categoryIsLoading}
-                            className="group-hover:block hidden rounded bg-gray-50 p-1"
+                          <Button
+                            size={"icon"}
+                            disabled={subCategoryIsLoading}
+                            className="bg-primary hover:bg-primary/50"
                           >
-                            <Trash2 className="text-red-400" size={20} />
-                          </button>
+                            <Trash2 className="text-secondary" size={20} />
+                          </Button>
                         </AlertPopup>
                       </div>
                     </li>

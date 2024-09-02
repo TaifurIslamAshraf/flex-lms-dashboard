@@ -27,8 +27,8 @@ const Users = async () => {
         <h1 className="font-bold text-3xl uppercase">All Users</h1>
       </div>
 
-      <Table>
-        <TableHeader>
+      <Table className="">
+        <TableHeader className="">
           <TableRow>
             <TableHead className="min-w-[100px]">Image</TableHead>
             <TableHead className="min-w-[140px]">Name</TableHead>

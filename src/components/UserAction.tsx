@@ -40,7 +40,7 @@ const UserAction: FC<Props> = ({ userId, role }) => {
 
   return (
     <div>
-      <div className="max-w-[300px] w-full">
+      <div className="min-w-[100px] w-full">
         <Select
           defaultValue={role}
           onValueChange={(value) => handleChangeRole(value)}

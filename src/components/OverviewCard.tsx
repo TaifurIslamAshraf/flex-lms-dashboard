@@ -9,7 +9,7 @@ const OverviewCard = async () => {
   return (
     <div className="space-y-6">
       <h1 className="font-semibold text-muted-foreground text-2xl">Overview</h1>
-      <div className="md:flex block items-center md:gap-6 md:space-y-0 space-y-4">
+      <div className="md:flex block items-center justify-between md:gap-6 md:space-y-0 space-y-4">
         <InfoCard
           title="Total Courses"
           desc="Shows Total number of course"

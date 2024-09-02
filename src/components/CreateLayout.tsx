@@ -143,7 +143,8 @@ const CreateLayout = () => {
                       required
                       onChange={handleChangeImage}
                       className={cn(
-                        layoutImage ? "min-h-[20vh]" : "min-h-[10vh]"
+                        layoutImage ? "min-h-[20vh]" : "min-h-[5vh]",
+                        "cursor-pointer"
                       )}
                       type="file"
                       accept="image/jpeg,image/jpg,image/png,image/webp"
@@ -158,7 +159,7 @@ const CreateLayout = () => {
                 src={imagePreview}
                 height={200}
                 width={100}
-                className="h-[20vh] w-[20vw] object-contain absolute top-[2rem] right-0"
+                className="h-[20vh] w-[20vw] object-contain absolute top-[2rem] -right-6"
                 alt="image"
               />
             ) : (

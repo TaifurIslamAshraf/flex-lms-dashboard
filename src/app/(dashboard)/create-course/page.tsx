@@ -68,6 +68,8 @@ const CreateCourse = () => {
       ],
     },
   });
+
+  console.log(CourseForm.watch());
   const [formStep, setFormStep] = useState(0);
   const [isCollapsed, setIsCollapsed] = useState<boolean[]>([]);
   const router = useRouter();

@@ -192,17 +192,28 @@ const CourseInfo = ({ handleNextClick, handlePrevClick, form }: Props) => {
 
         <div className="grow">
           <FormField
-            control={form.control}
             name="level"
+            control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-primary">Course Level</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Beginner, Expart or intermediate"
-                    {...field}
-                  />
-                </FormControl>
+                <FormLabel className="text-primary">Category</FormLabel>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                  }}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Course Level" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="Beginner">Beginner</SelectItem>
+                    <SelectItem value="intermediate">intermediate</SelectItem>
+                    <SelectItem value="Expart">Expart</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}

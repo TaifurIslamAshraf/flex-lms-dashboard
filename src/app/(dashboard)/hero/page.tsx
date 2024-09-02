@@ -21,7 +21,7 @@ const page = () => {
         <DialogTrigger className="max-w-[200px] w-full border p-2 rounded-md shadow-sm flex items-center gap-4 justify-center hover:bg-slate-300 transition-all duration-300 font-semibold ml-auto">
           Create Layout <Plus />
         </DialogTrigger>
-        <DialogContent className="max-h-[500px] h-full w-full scrollbar-thin">
+        <DialogContent className="max-h-[500px] h-full max-w-[800px] w-full scrollbar-thin">
           <DialogHeader>
             <DialogTitle>Create Layout</DialogTitle>
           </DialogHeader>

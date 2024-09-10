@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
 
   await customRevalidateTag(tag);
 
-  return NextResponse.json({
+  return Response.json({
     message: `${tag} Validate successfully`,
   });
 }

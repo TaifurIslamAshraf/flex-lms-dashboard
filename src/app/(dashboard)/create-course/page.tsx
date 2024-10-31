@@ -12,7 +12,7 @@ import FormStep2 from "@/components/courses/FormStep2";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Form } from "@/components/ui/form";
-import { customRevalidateTag } from "@/lib/_actions/revalidateTag";
+import { handleRevalidation } from "@/lib/_actions/revalidateTag";
 import { courseFormSchema } from "@/lib/formShemas/createCourse.schema";
 import { cn } from "@/lib/utils";
 import { useCreateCourseMutation } from "@/redux/features/courses/courseApi";
@@ -142,7 +142,7 @@ const CreateCourse = () => {
       payload: formData,
     });
 
-    await customRevalidateTag("Course");
+    await handleRevalidation("Course");
   };
 
   useEffect(() => {

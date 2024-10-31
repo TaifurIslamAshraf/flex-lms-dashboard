@@ -187,7 +187,7 @@ const UpdateCourse: FC<Props> = ({ params }) => {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Course Update Successfull");
-      router.replace("/courses");
+      router.push("/courses");
     } else if (error) {
       const errorData = error as any;
       toast.error(errorData?.data?.message);

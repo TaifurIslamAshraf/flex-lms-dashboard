@@ -5,6 +5,7 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "flex-lms-server-production.up.railway.app",
+        pathname: "/**"
       },
       {
         protocol: "http",

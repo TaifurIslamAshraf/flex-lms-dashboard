@@ -22,8 +22,9 @@ const refreshToken = async (token: JWT): Promise<JWT> => {
 export const authOptions: AuthOptions = {
   pages: {
     signIn: "/login",
-    error: "/not-found",
+    error: "/error",
   },
+  secret: config.authSecret,
   providers: [
     CredentialsProvider({
       name: "Credentials",

@@ -5,6 +5,7 @@ const config = {
   clientApi: process.env.NEXT_PUBLIC_BASE_CLIENT_SERVER as string,
   main_domain: process.env.NEXT_PUBLIC_MAIN_DOMAIN,
   base_url: process.env.NEXT_PUBLIC_BASE_URL,
+  authSecret: process.env.NEXTAUTH_SECRET,
   base_client_url: process.env.NEXT_PUBLIC_BASE_CLIENT_URL,
   courier_api_key: process.env.NEXT_PUBLIC_COURIER_API_KEY,
   courier_secret_key: process.env.NEXT_PUBLIC_COURIER_SECRET_KEY,
